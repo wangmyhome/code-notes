@@ -22,37 +22,23 @@ public class LeetCode350 {
 
     }
 
-    //map集合和list
-//    public static int[] intersect(int[] nums1, int[] nums2) {
-//        Map<Integer,Integer> map1 = new HashMap<>();
-//        for (Integer i: nums1) {
-//            map1.put(i,i);
-//        }
-//        List<Integer> res = new ArrayList();
-//        for (Integer i: nums2) {
-//            if(Objects.nonNull(map1.get(i))){
-//                res.add(i);
-//                map1.remove(i);
-//            }
-//        }
-//        int [] a = new int[res.size()];
-//        for(int z=0; z < res.size(); z++){
-//            a[z] = res.get(z);
-//        }
-//        return a;
-//    }
-
-    //list集合
+    //map集合和list  2 ms	38.5 MB	Java
     public static int[] intersect(int[] nums1, int[] nums2) {
-        List<Integer> l1 = new ArrayList();
-        for (Integer i: nums1) {
-            l1.add(i);
+        Map<Integer,Integer> map1 = new HashMap<>();
+        for (int i: nums1) {
+            Integer count = map1.get(i);
+            if(count == null){
+               map1.put(i,1);
+            }else {
+                map1.put(i,++count);
+            }
         }
         List<Integer> res = new ArrayList();
-        for (int i : nums2) {
-            if(l1.contains(i)){
-                l1.remove(Integer.valueOf(i));
+        for (Integer i: nums2) {
+            Integer count = map1.get(i);
+            if(count!=null && count != 0){
                 res.add(i);
+                map1.put(i,--count);
             }
         }
         int [] a = new int[res.size()];
@@ -61,6 +47,26 @@ public class LeetCode350 {
         }
         return a;
     }
+
+      //list集合 14 ms	38.8 MB
+//    public static int[] intersect(int[] nums1, int[] nums2) {
+//        List<Integer> l1 = new ArrayList();
+//        for (Integer i: nums1) {
+//            l1.add(i);
+//        }
+//        List<Integer> res = new ArrayList();
+//        for (int i : nums2) {
+//            if(l1.contains(i)){
+//                l1.remove(Integer.valueOf(i));
+//                res.add(i);
+//            }
+//        }
+//        int [] a = new int[res.size()];
+//        for(int z=0; z < res.size(); z++){
+//            a[z] = res.get(z);
+//        }
+//        return a;
+//    }
 
 
     //lambada表达式方式
